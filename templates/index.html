@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Golang Server</title>
+</head>
+<body>
+<h1>Golang Server</h1>
+<form id="dataForm" action="/submit" method="post">
+    <label for="inputData">Введите данные:</label>
+    <input type="text" id="inputData" name="inputData" required>
+    <input type="submit" value="Отправить">
+</form>
+
+<button id="gf">GO FAKE IT</button>
+<div id="succ"></div>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById("dataForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/submit", true);
+        xhr.onload = function() {
+            var str = xhr.responseText
+            if (xhr.responseText !== "FIND DATA ERROR (CHECK ID)") {
+                var obj = JSON.parse(xhr.responseText);
+                str = JSON.stringify(obj, null, 2);}
+            document.getElementById("result").innerHTML = "<pre>" + str + "</pre>";
+        };
+        xhr.send(formData);
+    });
+    document.getElementById("gf").onclick = async (e) => {
+        var req = await fetch("\gofakeit").then(r => r.json())
+        document.getElementById("succ").innerHTML = "Добавлен заказ с ID:" + req.Did
+    }
+</script>
+</body>
+</html>
