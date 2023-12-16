@@ -20,15 +20,18 @@ type HandNats struct {
 func InitConnection(cch *cache.Cache) (*HandNats, error) {
 	hn := HandNats{}
 	hn.Ident = "test"
+	time.Sleep(time.Second * 10)
 	conn, err := stan.Connect(os.Getenv("NTS_CLUSTER"),
 		os.Getenv("NTS_ID"),
-		stan.NatsURL(fmt.Sprintf("nats://0.0.0.0:%s", os.Getenv("NTS_HOST"))),
+		stan.NatsURL("nats://stan-server:4222"),
 		stan.NatsOptions(
-			nats.ReconnectWait(time.Second*4),
-			nats.Timeout(time.Second*4),
+			nats.ReconnectWait(time.Second*20),
+			nats.Timeout(time.Second*20),
+			nats.ErrorHandler(func(conn *nats.Conn, sub *nats.Subscription, err error) {
+				fmt.Printf("NATS error: %v\n", err)
+			}),
 		),
 		stan.Pings(5, 3))
-
 	if err != nil {
 		log.Fatalf("ERROR: %s", err)
 		return nil, err

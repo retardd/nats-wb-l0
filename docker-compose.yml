@@ -1,0 +1,31 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - config/config.env
+    depends_on:
+      - stan-server
+      - postgres
+
+  stan-server:
+    image: nats-streaming:latest
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command:
+      - "-cid"
+      - test_cluster
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: wb_test2
+    ports:
+      - "5432:5432"
+    volumes:
+      - .:/docker-entrypoint-initdb.d/

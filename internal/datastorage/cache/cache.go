@@ -63,7 +63,6 @@ func (cch *Cache) FindData(ctx context.Context, mdId int) (error, *structure.Mod
 			break
 		}
 	}
-
 	cch.Cch[mdId] = model
 	cch.Mtx.Unlock()
 
@@ -81,7 +80,7 @@ func (cch *Cache) AddData(ctx context.Context, model *structure.Model) (error, i
 
 	mdId, err := cch.Psql.InsertAll(ctx, model)
 
-	cch.LastId = mdId
+	cch.LastId = mdId + 1
 
 	if err != nil {
 		return err, mdId

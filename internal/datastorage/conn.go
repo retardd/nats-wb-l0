@@ -46,7 +46,7 @@ func CreateClient(ctx context.Context, cc ConnectionConfig) (err error, pool *pg
 		defer escape()
 		pool, err = pgxpool.Connect(ctx, connString)
 		if err != nil {
-			log.Fatalf("error tries to connection: %s", err)
+			log.Printf("error tries to connection: %s", err)
 			return err
 		}
 		return nil

@@ -10,7 +10,7 @@ delivery_service TEXT,
 shardkey TEXT,
 sm_id INT,
 date_created TIMESTAMP,
-oof_shard TEXT)
+oof_shard TEXT);
 
 
 CREATE TABLE delivery (
@@ -23,7 +23,7 @@ city TEXT,
 address TEXT,
 region TEXT,
 email TEXT,
-CONSTRAINT fk_c_id FOREIGN KEY(fk_c_id) REFERENCES model(id))
+CONSTRAINT fk_c_id FOREIGN KEY(fk_c_id) REFERENCES model(id));
 
 
 CREATE TABLE payment (
@@ -39,7 +39,7 @@ bank TEXT,
 delivery_cost INT,
 goods_total INT,
 custom_fee INT,
-CONSTRAINT fk_c_id FOREIGN KEY(fk_c_id) REFERENCES model(id))
+CONSTRAINT fk_c_id FOREIGN KEY(fk_c_id) REFERENCES model(id));
 
 CREATE TABLE items (
 id SERIAL PRIMARY KEY,
@@ -55,4 +55,4 @@ total_price INT,
 nm_id INT,
 brand TEXT,
 status INT,
-CONSTRAINT fk_c_id FOREIGN KEY(fk_c_id) REFERENCES model(id))
+CONSTRAINT fk_c_id FOREIGN KEY(fk_c_id) REFERENCES model(id));
