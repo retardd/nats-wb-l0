@@ -8,7 +8,6 @@ import (
 	"l0/internal/datastorage/structure"
 	"log"
 	"os"
-	"strconv"
 )
 
 type Sub struct {
@@ -51,17 +50,11 @@ func (sub *Sub) AddModel(mes *stan.Msg) {
 	if err != nil {
 		log.Fatalf("IN HANDLING VALIDATION ERROR")
 	}
-	var mdId int
 	//КОНТЕКСТ БД
-	err, mdId = sub.cache.AddData(context.TODO(), &tempModel)
+	err = sub.cache.AddData(context.TODO(), &tempModel)
 
 	if err != nil {
 		log.Fatalf("ADDING DATA ERROR")
-	}
-
-	err = os.Setenv("lastID", strconv.Itoa(mdId))
-	if err != nil {
-		return
 	}
 }
 

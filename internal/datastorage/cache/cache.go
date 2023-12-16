@@ -69,7 +69,7 @@ func (cch *Cache) FindData(ctx context.Context, mdId int) (error, *structure.Mod
 	return nil, &model
 }
 
-func (cch *Cache) AddData(ctx context.Context, model *structure.Model) (error, int) {
+func (cch *Cache) AddData(ctx context.Context, model *structure.Model) error {
 	cch.Mtx.Lock()
 	if len(cch.Cch) > cch.Size {
 		for k, _ := range cch.Cch {
@@ -83,11 +83,11 @@ func (cch *Cache) AddData(ctx context.Context, model *structure.Model) (error, i
 	cch.LastId = mdId + 1
 
 	if err != nil {
-		return err, mdId
+		return err
 	}
 
 	cch.Cch[mdId] = *model
 	cch.Mtx.Unlock()
 
-	return nil, mdId
+	return nil
 }

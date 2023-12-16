@@ -23,7 +23,7 @@ func InitConnection(cch *cache.Cache) (*HandNats, error) {
 	time.Sleep(time.Second * 10)
 	conn, err := stan.Connect(os.Getenv("NTS_CLUSTER"),
 		os.Getenv("NTS_ID"),
-		stan.NatsURL("nats://stan-server:4222"),
+		stan.NatsURL(fmt.Sprintf("nats://stan-server:%s", os.Getenv("NTS_HOST"))),
 		stan.NatsOptions(
 			nats.ReconnectWait(time.Second*20),
 			nats.Timeout(time.Second*20),
